@@ -11,7 +11,7 @@ app.get('/player', function (req, res) {
   service
     .getPlayers(connection)
     .then(function (players) {
-      res.setHeader("Access-Control-Allow-Origin: *");
+      res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Content-Type', 'application/json');
       res.send(JSON.stringify(players));
     });
