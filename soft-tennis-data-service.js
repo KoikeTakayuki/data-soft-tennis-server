@@ -9,7 +9,6 @@ var createQueryPromise = function(query, data, getOnlyFirst) {
             var callback = function(err, result) {
 
                 if (err) {
-                    throw err;
                     failure(err);
                 } else if (getOnlyFirst) {
                     if (result[0]) {
