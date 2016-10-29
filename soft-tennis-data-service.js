@@ -31,5 +31,5 @@ var createQueryPromise = function(query, data, getOnlyFirst) {
     };
 };
 
-service.getPlayers = createQueryPromise('SELECT p.id AS id, p.name AS name, t.name AS team_name FROM player AS p INNER JOIN team AS t ON t.id = p.current_team_id');
+service.getPlayers = createQueryPromise('SELECT p.id AS id, p.name AS name, p.birth_year AS birth_year, t.name AS team_name FROM player AS p INNER JOIN team AS t ON t.id = p.current_team_id');
 module.exports = service;
