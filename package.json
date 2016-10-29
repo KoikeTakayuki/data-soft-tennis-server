@@ -1,0 +1,28 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "data-soft-tennis-server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoikeTakayuki/Blog.git"
+  },
+  "author": "KoikeTakayuki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KoikeTakayuki/Blog/issues"
+  },
+  "homepage": "https://github.com/KoikeTakayuki/Blog#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "memcache": "^0.3.0",
+    "mysql": "^2.11.1",
+    "request": "^2.76.0",
+    "underscore": "^1.8.3"
+  }
+}
