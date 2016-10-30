@@ -6,16 +6,20 @@ var connection = require('./sql-connection-provider').provideConnection();
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+var jsonRequestHandler = function(methodName) {
+  return function(req, res){
+    var proc = service[methodName];
 
-app.get('/player', function (req, res) {
-  service
-    .getPlayers(connection)
-    .then(function (players) {
+    proc(connection).then(function (results) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(players));
-    });
-});
+      res.send(JSON.stringify(results));
+    })
+  };
+};
 
+app.get('/player', jsonRequestHandler('getPlayers'));
+
+app.get('/team', jsonRequestHandler('getTeams'));
 
 app.listen(80);
