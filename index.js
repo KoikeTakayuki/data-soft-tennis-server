@@ -21,5 +21,10 @@ var jsonRequestHandler = function(methodName) {
 app.get('/player', jsonRequestHandler('getPlayers'));
 
 app.get('/team', jsonRequestHandler('getTeams'));
+app.get('/team/works-team', jsonRequestHandler('getWorksTeams'));
+app.get('/team/university', jsonRequestHandler('getUniversityTeams'));
+app.get('/team/high-school', jsonRequestHandler('getHighSchoolTeams'));
+app.get('/team/junior-high', jsonRequestHandler('getJuniorHighTeams'));
+
 
 app.listen(80);
