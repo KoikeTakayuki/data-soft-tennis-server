@@ -6,69 +6,90 @@ var connection = require('./sql-connection-provider').provideConnection();
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-var jsonRequestHandler = function(methodName) {
-  return function(req, res){
-    var proc = service[methodName];
-
-    proc(connection).then(function (results) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Content-Type', 'application/json');
-      res.send(JSON.stringify(results));
-    })
+var withHeader = function (cont) {
+  return function (req, res) {
+     res.setHeader('Access-Control-Allow-Origin', '*');
+     res.setHeader('Content-Type', 'application/json');
+     cont(req, res);
   };
 };
 
-app.get('/player', jsonRequestHandler('getPlayers'));
+var simpleQuery = function(methodName) {
+  return withHeader(function(req, res){
+    var proc = service[methodName];
 
-app.get('/team', jsonRequestHandler('getTeams'));
-app.get('/team/works-team', jsonRequestHandler('getWorksTeams'));
-app.get('/team/university', jsonRequestHandler('getUniversityTeams'));
-app.get('/team/high-school', jsonRequestHandler('getHighSchoolTeams'));
-app.get('/team/junior-high', jsonRequestHandler('getJuniorHighTeams'));
-
-app.get('/competition', jsonRequestHandler('getCompetitions'));
-
-app.get('/match', jsonRequestHandler('getMatches'));
+    proc(connection).then(function (results) {
+      res.send(JSON.stringify(results));
+    });
+  });
+};
 
 
-app.get('/competition/:competitionId', function (req, res) {
-  service.getCompetitionById(connection, req.params.competitionId).then(function (competition) { 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(competition));
+app.get('/player', simpleQuery('getPlayers'));
+
+app.get('/team', simpleQuery('getTeams'));
+app.get('/team/works-team', simpleQuery('getWorksTeams'));
+app.get('/team/university', simpleQuery('getUniversityTeams'));
+app.get('/team/high-school', simpleQuery('getHighSchoolTeams'));
+app.get('/team/junior-high', simpleQuery('getJuniorHighTeams'));
+
+app.get('/competition', simpleQuery('getCompetitions'));
+
+app.get('/match', simpleQuery('getMatches'));
+
+
+app.get('/competition/:competitionId', withHeader(function (req, res) {
+  service
+    .getCompetitionById(connection, req.params.competitionId)
+    .then(function (competition) { 
+      res.send(JSON.stringify(competition));
+     });
   })
-});
+);
 
-app.get('/competition/:competitionId/match', function (req, res) {
-  service.getMatchesByCompetitionId(connection, req.params.competitionId).then(function (competition) { 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(competition));
+app.get('/competition/:competitionId/match', withHeader(function (req, res) {
+  service
+    .getMatchesByCompetitionId(connection, req.params.competitionId)
+    .then(function (competition) { 
+      res.send(JSON.stringify(competition));
+    });
   })
-});
+);
 
-app.get('/team/:teamId', function (req, res) {
-  service.getTeamById(connection, req.params.teamId).then(function (team) { 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(team));
+app.get('/team/:teamId', withHeader(function (req, res) {
+  service
+    .getTeamById(connection, req.params.teamId)
+    .then(function (team) { 
+      res.send(JSON.stringify(team));
+    });
   })
-});
+);
 
-app.get('/team/:teamId/player', function (req, res) {
-  service.getPlayersByTeamId(connection, req.params.teamId).then(function (players) { 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(players));
+app.get('/team/:teamId/player', withHeader(function (req, res) {
+  service
+    .getPlayersByTeamId(connection, req.params.teamId)
+    .then(function (players) { 
+      res.send(JSON.stringify(players));
+    });
   })
-});
+);
 
-app.get('/team/:teamId/former-player', function (req, res) {
-  service.getFormerPlayersByTeamId(connection, req.params.teamId).then(function (players) { 
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(players));
+app.get('/team/:teamId/former-player', withHeader(function (req, res) {
+  service
+    .getFormerPlayersByTeamId(connection, req.params.teamId)
+    .then(function (players) { 
+      res.send(JSON.stringify(players));
+    });
   })
-});
+);
+
+app.get('/player/:playerId', withHeader(function (req, res) {
+  service
+    .getPlayerById(connection, req.params.playerId)
+    .then(function (playerAndTeamData) { 
+      res.send(JSON.stringify(playerAndTeamData));
+    });
+  })
+);
 
 app.listen(80);
