@@ -47,4 +47,12 @@ app.get('/competition/:competitionId/match', function (req, res) {
   })
 });
 
+app.get('/team/:teamId', function (req, res) {
+  service.getTeamById(connection, req.params.teamId).then(function (team) { 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(team));
+  })
+});
+
 app.listen(80);

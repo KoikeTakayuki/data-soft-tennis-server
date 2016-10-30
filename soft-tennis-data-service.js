@@ -49,4 +49,8 @@ service.getMatchesByCompetitionId = function (connection, competitionId) {
     return createQueryPromise('SELECT * FROM soft_tennis_match WHERE ?', { competition_id: competitionId })(connection);
 };
 
+service.getTeamById = function (connection, teamId) {
+    return createQueryPromise('SELECT * FROM team WHERE ?', { id: teamId }, true)(connection);
+};
+
 module.exports = service;
