@@ -27,5 +27,6 @@ app.get('/team/high-school', jsonRequestHandler('getHighSchoolTeams'));
 app.get('/team/junior-high', jsonRequestHandler('getJuniorHighTeams'));
 
 app.get('/competition', jsonRequestHandler('getCompetitions'));
+app.get('/match', jsonRequestHandler('getMatches'));
 
 app.listen(80);

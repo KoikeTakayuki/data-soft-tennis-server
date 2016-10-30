@@ -39,4 +39,6 @@ service.getHighSchoolTeams = createQueryPromise('SELECT t.id AS id, t.name AS na
 service.getJuniorHighTeams = createQueryPromise('SELECT t.id AS id, t.name AS name, t.team_division_id AS team_division_id, p.name AS prefecture_name FROM team AS t INNER JOIN prefecture AS p ON t.prefecture_id = p.id WHERE t.team_division_id = 2');
 
 service.getCompetitions = createQueryPromise('SELECT * FROM competition');
+service.getMatches = createQueryPromise('SELECT * FROM soft_tennis_match');
+
 module.exports = service;
