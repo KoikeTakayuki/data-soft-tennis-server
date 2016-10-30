@@ -63,4 +63,12 @@ app.get('/team/:teamId/player', function (req, res) {
   })
 });
 
+app.get('/team/:teamId/former-player', function (req, res) {
+  service.getFormerPlayersByTeamId(connection, req.params.teamId).then(function (players) { 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(players));
+  })
+});
+
 app.listen(80);

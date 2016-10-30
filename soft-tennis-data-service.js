@@ -57,4 +57,11 @@ service.getPlayersByTeamId = function (connection, teamId) {
     return createQueryPromise('SELECT * FROM player WHERE ?', { current_team_id: teamId })(connection);
 };
 
+service.getFormerPlayersByTeamId = function (connection, teamId) {
+    return createQueryPromise({
+        sql: 'SELECT * FROM player WHERE NOT(current_team_id = ?) AND (junior_high_team_id = ? OR high_school_team_id = ? OR university_team_id = ?)',
+        values: [teamId, teamId, teamId, teamId]
+    })(connection);
+}
+
 module.exports = service;
