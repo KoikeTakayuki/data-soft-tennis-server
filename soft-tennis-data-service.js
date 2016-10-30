@@ -38,7 +38,15 @@ service.getUniversityTeams = createQueryPromise('SELECT t.id AS id, t.name AS na
 service.getHighSchoolTeams = createQueryPromise('SELECT t.id AS id, t.name AS name, t.team_division_id AS team_division_id, p.name AS prefecture_name FROM team AS t INNER JOIN prefecture AS p ON t.prefecture_id = p.id WHERE t.team_division_id = 3');
 service.getJuniorHighTeams = createQueryPromise('SELECT t.id AS id, t.name AS name, t.team_division_id AS team_division_id, p.name AS prefecture_name FROM team AS t INNER JOIN prefecture AS p ON t.prefecture_id = p.id WHERE t.team_division_id = 2');
 
-service.getCompetitions = createQueryPromise('SELECT c.id AS id, c.name AS name, t.name AS tennis_court_name FROM competition AS c INNER JOIN tennis_court AS t WHERE t.id = c.tennis_court_id');
+service.getCompetitions = createQueryPromise('SELECT c.id AS id, c.name AS name, t.name AS tennis_court_name, c.date AS date, c.duration AS duration FROM competition AS c INNER JOIN tennis_court AS t WHERE t.id = c.tennis_court_id');
 service.getMatches = createQueryPromise('SELECT * FROM soft_tennis_match');
+
+service.getCompetitionById = function (connection, competitionId) {
+    return createQueryPromise('SELECT * FROM competition WHERE ?', { id: competitionId }, true)(connection);
+}
+
+service.getMatchesByCompetitionId = function (connection, competitionId) {
+    return createQueryPromise('SELECT * FROM soft_tennis_match WHERE ?', { competition_id: competitionId })(connection);
+};
 
 module.exports = service;

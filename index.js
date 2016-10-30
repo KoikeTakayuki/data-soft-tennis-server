@@ -27,6 +27,24 @@ app.get('/team/high-school', jsonRequestHandler('getHighSchoolTeams'));
 app.get('/team/junior-high', jsonRequestHandler('getJuniorHighTeams'));
 
 app.get('/competition', jsonRequestHandler('getCompetitions'));
+
 app.get('/match', jsonRequestHandler('getMatches'));
+
+
+app.get('/competition/:competitionId', function (req, res) {
+  service.getCompetitionById(connection, req.params.competitionId).then(function (competition) { 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(competition));
+  })
+});
+
+app.get('/competition/:competitionId/match', function (req, res) {
+  service.getMatchesByCompetitionId(connection, req.params.competitionId).then(function (competition) { 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(competition));
+  })
+});
 
 app.listen(80);
