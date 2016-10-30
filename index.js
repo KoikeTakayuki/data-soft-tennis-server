@@ -55,7 +55,7 @@ app.get('/team/:teamId', function (req, res) {
   })
 });
 
-app.get('/team/:teamId/players', function (req, res) {
+app.get('/team/:teamId/player', function (req, res) {
   service.getPlayersByTeamId(connection, req.params.teamId).then(function (players) { 
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Content-Type', 'application/json');
