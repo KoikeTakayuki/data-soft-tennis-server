@@ -55,4 +55,12 @@ app.get('/team/:teamId', function (req, res) {
   })
 });
 
+app.get('/team/:teamId/players', function (req, res) {
+  service.getPlayersByTeamId(connection, req.params.teamId).then(function (players) { 
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(players));
+  })
+});
+
 app.listen(80);

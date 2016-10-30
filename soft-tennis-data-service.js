@@ -53,4 +53,8 @@ service.getTeamById = function (connection, teamId) {
     return createQueryPromise('SELECT * FROM team WHERE ?', { id: teamId }, true)(connection);
 };
 
+service.getPlayersByTeamId = function (connection, teamId) {
+    return createQueryPromise('SELECT * FROM player WHERE ?', { current_team_id: teamId })(connection);
+};
+
 module.exports = service;
