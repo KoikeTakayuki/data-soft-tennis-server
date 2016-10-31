@@ -72,6 +72,11 @@ service.getPlayersByBirthYear = function (connection, birthYear) {
     return createQueryPromise('SELECT p.id AS id, p.name AS name, t.id AS team_id, t.name AS team_name FROM player AS p INNER JOIN team AS t ON t.id = p.current_team_id WHERE ?', { birth_year: birthYear })(connection);
 };
 
-
+service.getMatchesByPlayerId = function (connection, playerId) {
+    return createQueryPromise({
+        sql: 'SELECT * FROM soft_tennis_match WHERE player1_id = ? OR player2_id = ? OR player3_id = ? OR player4_id = ?',
+        values: [playerId, playerId, playerId, playerId]
+    })(connection);
+};
 
 module.exports = service;

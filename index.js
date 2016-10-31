@@ -101,4 +101,14 @@ app.get('/player/birth-year/:birthYear', withHeader(function (req, res) {
   })
 );
 
+
+app.get('/player/:playerId/match', withHeader(function (req, res) {
+  service
+    .getMatchesByPlayerId(connection, req.params.playerId)
+    .then(function (matches) { 
+      res.send(JSON.stringify(matches));
+    });
+  })
+);
+
 app.listen(80);
