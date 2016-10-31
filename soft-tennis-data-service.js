@@ -69,7 +69,7 @@ service.getPlayerById = function (connection, playerId) {
 };
 
 service.getPlayersByBirthYear = function (connection, birthYear) {
-    return createQueryPromise('SELECT p.id AS id, p.name AS name, p.birth_year AS birth_year, p.is_lefty AS is_lefty, jh.id AS junior_high_team_id, jh.name AS junior_high_team_name, hs.id AS high_school_team_id, hs.name AS high_school_team_name, u.id AS university_team_id, u.name AS university_team_name, c.id AS current_team_id, c.name AS current_team_name FROM (((player AS p INNER JOIN team AS jh ON jh.id = p.junior_high_team_id) INNER JOIN team AS hs ON hs.id = p.high_school_team_id) INNER JOIN team AS u ON u.id = p.university_team_id) INNER JOIN team AS c ON c.id = p.current_team_id WHERE ?', { "p.birth_year": birthYear }, true)(connection);
+    return createQueryPromise('SELECT * FROM player WHERE ?', { birth_year: birthYear })(connection);
 };
 
 

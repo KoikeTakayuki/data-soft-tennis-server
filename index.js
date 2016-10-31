@@ -92,4 +92,13 @@ app.get('/player/:playerId', withHeader(function (req, res) {
   })
 );
 
+app.get('/player/birth-year/:birthYear', withHeader(function (req, res) {
+  service
+    .getPlayersByBirthYear(connection, req.params.birthYear)
+    .then(function (players) { 
+      res.send(JSON.stringify(players));
+    });
+  })
+);
+
 app.listen(80);
