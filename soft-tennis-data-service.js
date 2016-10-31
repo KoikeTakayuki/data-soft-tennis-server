@@ -69,7 +69,7 @@ service.getPlayerById = function (connection, playerId) {
 };
 
 service.getPlayersByBirthYear = function (connection, birthYear) {
-    return createQueryPromise('SELECT * FROM player WHERE ?', { birth_year: birthYear })(connection);
+    return createQueryPromise('SELECT p.id AS id, p.name AS name, t.id AS team_id, t.name AS team_name FROM player AS p INNER JOIN team AS t ON t.id = p.current_team_id WHERE ?', { birth_year: birthYear })(connection);
 };
 
 
