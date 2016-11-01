@@ -79,4 +79,11 @@ service.getMatchesByPlayerId = function (connection, playerId) {
     })(connection);
 };
 
+service.getMatchById = function (connection, matchId) {
+    return createQueryPromise({
+        sql: 'SELECT m.id AS id, m.title AS title, m.url AS url, m.date AS date, t.id AS tennis_court_id, t.name AS tennis_court_name, p1.id AS player1_id, p1.name AS player1_name, p2.id AS player2_id, p2.name AS player2_name, p3.id AS player3_id, p3.name AS player3_name, p4.id AS player4_id, p4.name AS player4_name FROM ((((soft_tennis_match AS m INNER JOIN player AS p1 ON p1.id = m.player1_id) INNER JOIN player AS p2 ON p2.id = m.player2_id) INNER JOIN player AS p3 ON p3.id = m.player3_id) INNER JOIN player AS p4 ON p4.id = m.player4_id) INNER JOIN tennis_court AS t ON t.id = m.tennis_court_id WHERE m.id = ?',
+        values: [matchId]
+    }, null, true)(connection);
+};
+
 module.exports = service;

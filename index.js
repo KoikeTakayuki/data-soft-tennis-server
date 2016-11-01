@@ -111,4 +111,13 @@ app.get('/player/:playerId/match', withHeader(function (req, res) {
   })
 );
 
+app.get('/match/:matchId', withHeader(function (req, res) {
+  service
+    .getMatchById(connection, req.params.matchId)
+    .then(function (match) { 
+      res.send(JSON.stringify(match));
+    });
+  })
+);
+
 app.listen(80);
