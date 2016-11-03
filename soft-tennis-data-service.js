@@ -91,7 +91,7 @@ service.getTennisCourts = function (connection) {
 };
 
 service.getTennisCourtById = function (connection, tennisCourtId) {
-    return createQueryPromise('SELECT * FROM tennis_court WHERE ?', {id: tennisCourtId})(connection);
+    return createQueryPromise('SELECT * FROM tennis_court WHERE ?', {id: tennisCourtId}, true)(connection);
 }
 
 
