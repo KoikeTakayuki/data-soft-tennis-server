@@ -86,4 +86,9 @@ service.getMatchById = function (connection, matchId) {
     }, null, true)(connection);
 };
 
+service.getTennisCourts = function (connection) {
+    return createQueryPromise('SELECT t.id AS id, t.name AS name, t.url AS url, t.phone_number AS phone_number, p.id AS prefecture_id, p.name AS prefecture_name, t.latitude AS latitude, t.longitude AS longitude FROM tennis_court AS t INNER JOIN prefecture AS p ON p.id = t.prefecture_id')(connection);
+};
+
+
 module.exports = service;

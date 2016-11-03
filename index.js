@@ -28,6 +28,7 @@ var simpleQuery = function(methodName) {
 app.get('/player', simpleQuery('getPlayers'));
 
 app.get('/team', simpleQuery('getTeams'));
+app.get('/tennis-court', simpleQuery('getTennisCourts'));
 app.get('/team/works-team', simpleQuery('getWorksTeams'));
 app.get('/team/university', simpleQuery('getUniversityTeams'));
 app.get('/team/high-school', simpleQuery('getHighSchoolTeams'));
