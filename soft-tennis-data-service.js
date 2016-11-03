@@ -92,7 +92,11 @@ service.getTennisCourts = function (connection) {
 
 service.getTennisCourtById = function (connection, tennisCourtId) {
     return createQueryPromise('SELECT * FROM tennis_court WHERE ?', {id: tennisCourtId}, true)(connection);
-}
+};
+
+service.getCompetitionsByTennisCourtId = function (connection, tennisCourtId) {
+    return createQueryPromise('SELECT * FROM competition WHERE ?', {tennis_court_id: tennisCourtId})(connection);
+};
 
 
 module.exports = service;

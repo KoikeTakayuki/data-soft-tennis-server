@@ -129,4 +129,12 @@ app.get('/tennis-court/:tennisCourtId', withHeader(function (req, res) {
     });
 }));
 
+app.get('/tennis-court/:tennisCourtId/competition', withHeader(function (req, res) {
+  service
+    .getCompetitionsByTennisCourtId(connection, req.params.tennisCourtId)
+    .then(function (competitions) {
+      res.send(JSON.stringify(competitions));
+    });
+}));
+
 app.listen(80);
