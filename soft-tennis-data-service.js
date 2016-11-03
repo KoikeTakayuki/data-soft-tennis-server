@@ -91,7 +91,7 @@ service.getTennisCourts = function (connection) {
 };
 
 service.getTennisCourtById = function (connection, tennisCourtId) {
-    return createQueryPromise('SELECT * FROM tennis_court WHERE ?', {id: tennisCourtId}, true)(connection);
+    return createQueryPromise('SELECT t.id AS id, t.name AS name, t.url AS url, t.phone_number AS phone_number, p.id AS prefecture_id, p.name AS prefecture_name, t.address AS address, t.latitude AS latitude, t.longitude AS longitude FROM tennis_court AS t INNER JOIN prefecture AS p ON p.id = t.prefecture_id WHERE ?', {"t.id": tennisCourtId}, true)(connection);
 };
 
 service.getCompetitionsByTennisCourtId = function (connection, tennisCourtId) {
