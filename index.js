@@ -121,4 +121,12 @@ app.get('/match/:matchId', withHeader(function (req, res) {
   })
 );
 
+app.get('/tennis-court/:tennisCourtId', withHeader(function () {
+  service
+    .getTennisCourtById(connection, req.params.tennisCourtId)
+    .then(function (tennisCourt) {
+      res.send(JSON.stringify(tennisCourt));
+    });
+}));
+
 app.listen(80);
