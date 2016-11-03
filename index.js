@@ -123,7 +123,7 @@ app.get('/match/:matchId', withHeader(function (req, res) {
 
 app.get('/tennis-court/:tennisCourtId', withHeader(function (req, res) {
   service
-    .getTennisCourtById(connection, req.params.tennisCourtId)
+    .getTennisCourtById(connection, req.params.tennisCourtId, true)
     .then(function (tennisCourt) {
       res.send(JSON.stringify(tennisCourt));
     });
