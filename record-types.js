@@ -90,8 +90,7 @@ RecordTypes.Match = new RecordType('soft_tennis_match', [
   new BooleanField('is_singles'),
   new BooleanField('is_side_a_winner'),
   new RecordField('team_match', RecordTypes.TeamMatch),
-  new NumberField('team_match_number'),
-  new NumberField('team_match_number'),
+  new NumberField('team_match_count'),
   new RecordField('previous_match', this),
   new RecordField('next_match', this),
   new BooleanField('is_visible')
