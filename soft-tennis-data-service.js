@@ -38,7 +38,7 @@ service.Players = {
 service.Teams = {
 
   getTeams: function (connection, condition) {
-    return RecordTypes.Team.all(connection, condition, ['prefecture']);
+    return RecordTypes.Team.all(connection, new And(condition), ['prefecture']);
   },
   getTeamById: function (connection, teamId) {
     return RecordTypes.Team.first(connection, {id: teamId}, ['prefecture', 'team_division']);
