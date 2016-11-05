@@ -21,6 +21,7 @@ RecordTypes.Round = createEnumerationTable('round');
 RecordTypes.CourtSurface = createEnumerationTable('court_surface');
 RecordTypes.Tactics = createEnumerationTable('tactics');
 RecordTypes.CompetitionType = createEnumerationTable('competition_type');
+RecordTypes.CompetitionTag = createEnumerationTable('competition_tag');
 
 RecordTypes.TennisCourt = new RecordType('tennis_court', [
   new TextField('name'),
@@ -41,6 +42,7 @@ RecordTypes.Competition = new RecordType('competition', [
   new DateField('date'),
   new NumberField('duration'),
   new RecordField('competition_type', RecordTypes.CompetitionType),
+  new RecordField('competition_tag', RecordTypes.CompetitionTag),
   new BooleanField('is_visible')
 ]);
 

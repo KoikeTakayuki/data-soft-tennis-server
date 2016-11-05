@@ -43,6 +43,10 @@ app.get('/competition-type', toJsonResponse(function () {
   return service.MasterData.getCompetitionTypes(connection);
 }));
 
+app.get('/competition-tag', toJsonResponse(function () {
+  return service.MasterData.getCompetitionTags(connection);
+}));
+
 /* プレイヤー関連のデータ取得 */
 app.get('/player/:playerId', toJsonResponse(function (req) {
   return service.Players.getPlayerById(connection, req.params.playerId);
