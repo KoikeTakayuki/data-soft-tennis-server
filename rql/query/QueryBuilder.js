@@ -30,6 +30,10 @@ var QueryBuilder = function(recordType) {
 
 var makeAlias = function (tableName) {
   ++uniquerId;
+  if (uniquerId > 1000) {
+    uniquerId = uniquerId - 1000;
+  }
+
   return tableName + uniquerId;
 };
 
