@@ -59,8 +59,8 @@ service.TeamMatch = {
 
 service.Matches = {
 
-  getMatches: function (connection) {
-    return RecordTypes.Match.all(connection);
+  getMatches: function (connection, condition) {
+    return RecordTypes.Match.all(connection, condition);
   },
   getMatchById: function (connection, matchId) {
     return RecordTypes.Match.first(connection, {id: matchId}, ['player1', 'player2', 'player3', 'player4', 'tennis_court'])

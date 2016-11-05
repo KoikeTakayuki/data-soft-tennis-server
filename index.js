@@ -113,8 +113,8 @@ app.get('/team-match', toJsonResponse(function () {
 }));
 
 /* 試合関連のデータを取得 */
-app.get('/match', toJsonResponse(function () {
-  return service.Matches.getMatches(connection);
+app.get('/match', toJsonResponse(function (req) {
+  return service.Matches.getMatches(connection, req.query);
 }));
 
 app.get('/match/:matchId', toJsonResponse(function (req) {
