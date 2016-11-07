@@ -6,8 +6,6 @@ var connection = require('./sql-connection-provider').provideConnection();
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-var withHeader = function (w) {return w;}
-
 var toJsonResponse = function (cont) {
   return function (req, res) {
      res.setHeader('Access-Control-Allow-Origin', '*');
@@ -66,7 +64,14 @@ app.get('/player', toJsonResponse(function () {
 
 /* チーム関連のデータを取得 */
 app.get('/team', toJsonResponse(function (req) {
-  return service.Teams.getTeams(connection, req.query);
+  var condition = req.query,
+      pageNumber;
+
+  if (condition.pageNumber) {
+    pageNumber = condition.pageNumber;
+    delete condition.pageNumber;
+  }
+  return service.Teams.getTeams(connection, req.query, pageNumber);
 }));
 
 app.get('/team/:teamId', toJsonResponse(function (req) {

@@ -50,7 +50,7 @@ RecordType.prototype.getRecordFields = function () {
   });
 }
 
-RecordType.prototype.all = function (connection, condition, eagerRecordFields, orderFields, count) {
+RecordType.prototype.all = function (connection, condition, eagerRecordFields, orderFields, count, offset) {
   if (!eagerRecordFields) {
     eagerRecordFields = [];
   }
@@ -64,7 +64,7 @@ RecordType.prototype.all = function (connection, condition, eagerRecordFields, o
   return new Promise(function (success, failure) {
 
     queryBuilder = new QueryBuilder(that);
-    query = queryBuilder.buildQuery(condition, eagerRecordFields, orderFields, count);
+    query = queryBuilder.buildQuery(condition, eagerRecordFields, orderFields, count, offset);
 
     var aliasMapping = queryBuilder.getAliasMapping();
 

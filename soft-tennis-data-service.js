@@ -5,6 +5,8 @@ var Not = require('./rql/logic/Not');
 
 var service = {};
 
+var FETCH_COUNT = 6;
+
 service.Competitions = {
 
   getCompetitions: function (connection) {
@@ -37,8 +39,12 @@ service.Players = {
 
 service.Teams = {
 
-  getTeams: function (connection, condition) {
-    return RecordTypes.Team.all(connection, new And(condition), ['prefecture']);
+  getTeams: function (connection, condition, pageNumber) {
+    if (!pageNumber) {
+      pageNumber = 1;
+    }
+    var offset = (pageNumber - 1) * FETCH_COUNT;
+    return RecordTypes.Team.all(connection, new And(condition), ['prefecture'], false, FETCH_COUNT, offset);
   },
   getTeamById: function (connection, teamId) {
     return RecordTypes.Team.first(connection, {id: teamId}, ['prefecture', 'team_division']);

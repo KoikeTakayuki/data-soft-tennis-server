@@ -50,7 +50,7 @@ var attachAlias = function (aliasedTableName, isForeignTable) {
   }
 };
 
-QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orderFields, count) {
+QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orderFields, count, offset) {
   var aliasedTableName = makeAlias(this.recordType.tableName);
   var tableDeclaration = this.recordType.tableName + ' AS ' + aliasedTableName;
   var fieldDeclaration = this.recordType.getScalarFields().map(getFieldName).map(attachAlias(aliasedTableName));
@@ -93,6 +93,11 @@ QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orde
 
   if (_.isNumber(count)) {
     query += ' LIMIT ' + count;
+  }
+
+
+  if (_.isNumber(offset)) {
+    query += ' OFFSET ' + offset;
   }
 
   return query;
