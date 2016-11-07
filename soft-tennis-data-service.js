@@ -8,13 +8,13 @@ var service = {};
 service.Competitions = {
 
   getCompetitions: function (connection) {
-    return RecordTypes.Competition.all(connection, null, ['tennis_court', 'competition_type']);
+    return RecordTypes.Competition.all(connection, null, ['tennis_court', 'competition_type'], [{field: 'date'}]);
   },
   getCompetitionById: function (connection, competitionId) {
     return RecordTypes.Competition.first(connection, {id: competitionId}, ['tennis_court', 'competition_type']);
   },
   getMatchesByCompetitionId: function (connection, competitionId) {
-    return RecordTypes.Match.all(connection, {competition_id: competitionId}, ['player1', 'player2', 'player3', 'player4']);
+    return RecordTypes.Match.all(connection, {competition_id: competitionId}, ['player1', 'player2', 'player3', 'player4'], [{field:'round_id', asc: true}, {field: 'date'}]);
   },
 };
 
@@ -27,7 +27,7 @@ service.Players = {
     return RecordTypes.Player.all(connection, {birth_year: birthYear}, ['junior_high_team', 'high_school_team', 'university_team','current_team']);
   },
   getMatchesByPlayerId: function (connection,playerId) {
-    return RecordTypes.Match.all(connection, {player1_id: playerId, player2_id: playerId, player3_id: playerId, player4_id: playerId}, ['player']);
+    return RecordTypes.Match.all(connection, {player1_id: playerId, player2_id: playerId, player3_id: playerId, player4_id: playerId}, ['player'], [{field: 'date'}, {field:'round_id', asc: true}]);
   },
   getPlayers: function (connection) {
     return RecordTypes.Player.all(connection, null, ['current_team']);
@@ -44,10 +44,10 @@ service.Teams = {
     return RecordTypes.Team.first(connection, {id: teamId}, ['prefecture', 'team_division']);
   },
   getTeamPlayers: function (connection, teamId) {
-    return RecordTypes.Player.all(connection, {current_team_id: teamId}, ['prefecture', 'current_team']);
+    return RecordTypes.Player.all(connection, {current_team_id: teamId}, ['prefecture', 'current_team'], [{field: 'birth_year', asc: true}]);
   },
   getFormerTeamPlayers: function (connection, teamId) {
-    return RecordTypes.Player.all(connection, new And(new Or({junior_high_team_id: teamId, high_school_team_id: teamId, university_team_id: teamId}), new Not({current_team_id: teamId})), ['prefecture', 'current_team']);
+    return RecordTypes.Player.all(connection, new And(new Or({junior_high_team_id: teamId, high_school_team_id: teamId, university_team_id: teamId}), new Not({current_team_id: teamId})), ['prefecture', 'current_team'], [{field: 'birth_year'}]);
   }
 };
 
@@ -60,7 +60,7 @@ service.TeamMatch = {
 service.Matches = {
 
   getMatches: function (connection, condition) {
-    return RecordTypes.Match.all(connection, new And(condition), ['competition']);
+    return RecordTypes.Match.all(connection, new And(condition), ['competition'], [{field:'round_id', asc: true}, {field: 'date'}]);
   },
   getMatchById: function (connection, matchId) {
     return RecordTypes.Match.first(connection, {id: matchId}, ['player1', 'player2', 'player3', 'player4', 'tennis_court'])

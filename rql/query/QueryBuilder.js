@@ -50,7 +50,7 @@ var attachAlias = function (aliasedTableName, isForeignTable) {
   }
 };
 
-QueryBuilder.prototype.buildQuery = function (condition, count, eagerRecordFields) {
+QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orderFields, count) {
   var aliasedTableName = makeAlias(this.recordType.tableName);
   var tableDeclaration = this.recordType.tableName + ' AS ' + aliasedTableName;
   var fieldDeclaration = this.recordType.getScalarFields().map(getFieldName).map(attachAlias(aliasedTableName));
@@ -79,6 +79,17 @@ QueryBuilder.prototype.buildQuery = function (condition, count, eagerRecordField
     query = query + ' WHERE ' + conditionDeclaration;
   }
 
+  if (_.isArray(orderFields)) {
+
+    query += ' ORDER BY ';
+    _.each(orderFields, function (v, i) {
+
+      if (i > 0) {
+        query += ', ';
+      }
+      query += v.field + ' ' + (v.asc ? "ASC " : "DESC ");
+    });
+  }
 
   if (_.isNumber(count)) {
     query += ' LIMIT ' + count;
