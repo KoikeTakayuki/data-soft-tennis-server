@@ -41,9 +41,9 @@ service.Teams = {
 
   getTeams: function (connection, condition, pageNumber) {
     if (!pageNumber) {
-      pageNumber = 1;
+      pageNumber = 0;
     }
-    var offset = (pageNumber - 1) * FETCH_COUNT;
+    var offset = pageNumber * FETCH_COUNT;
     return RecordTypes.Team.all(connection, new And(condition), ['prefecture'], false, FETCH_COUNT, offset);
   },
   getTeamById: function (connection, teamId) {
