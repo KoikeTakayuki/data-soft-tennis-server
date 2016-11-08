@@ -5,7 +5,7 @@ var Not = require('./rql/logic/Not');
 
 var service = {};
 
-var FETCH_COUNT = 6;
+var FETCH_COUNT = 12;
 
 service.Competitions = {
 
