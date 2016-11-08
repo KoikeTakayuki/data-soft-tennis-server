@@ -54,6 +54,9 @@ service.Teams = {
   },
   getFormerTeamPlayers: function (connection, teamId) {
     return RecordTypes.Player.all(connection, new And(new Or({junior_high_team_id: teamId, high_school_team_id: teamId, university_team_id: teamId}), new Not({current_team_id: teamId})), ['prefecture', 'current_team'], [{field: 'birth_year'}]);
+  },
+  getTeamCount: function (connection, condition) {
+    return RecordTypes.Team.count(connection, new And(condition));
   }
 };
 

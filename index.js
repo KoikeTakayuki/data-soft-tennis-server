@@ -74,6 +74,11 @@ app.get('/team', toJsonResponse(function (req) {
   return service.Teams.getTeams(connection, req.query, pageNumber);
 }));
 
+app.get('/team/count', toJsonResponse(function (req) {
+  return service.Teams.getTeamCount(connection, req.query);
+}));
+
+
 app.get('/team/:teamId', toJsonResponse(function (req) {
   return service.Teams.getTeamById(connection, req.params.teamId);
 }));

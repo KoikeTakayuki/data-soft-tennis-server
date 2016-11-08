@@ -50,10 +50,18 @@ var attachAlias = function (aliasedTableName, isForeignTable) {
   }
 };
 
-QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orderFields, count, offset) {
+QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orderFields, count, offset, isCount) {
   var aliasedTableName = makeAlias(this.recordType.tableName);
   var tableDeclaration = this.recordType.tableName + ' AS ' + aliasedTableName;
-  var fieldDeclaration = this.recordType.getScalarFields().map(getFieldName).map(attachAlias(aliasedTableName));
+  var fieldDeclaration;
+
+
+  if (isCount) {
+    fieldDeclaration = ' COUNT(*) ';
+  } else {
+    fieldDeclaration = this.recordType.getScalarFields().map(getFieldName).map(attachAlias(aliasedTableName));
+  }
+
   condition.attachAlias(aliasedTableName);
 
   var that = this;
@@ -67,7 +75,10 @@ QueryBuilder.prototype.buildQuery = function (condition, eagerRecordFields, orde
 
       that.setAliasMapping(foreignTableName, rf.fieldName);
       tableDeclaration = tableDeclaration + ' LEFT JOIN ' + recordType.tableName + ' AS ' + foreignTableName + ' ON ' + aliasedTableName + '.' + rf.fieldName + '_id = ' + foreignTableName + '.id';
-      fieldDeclaration = fieldDeclaration + ', ' + recordType.getScalarFields().map(getFieldName).map(attachAlias(foreignTableName, true));
+
+      if (!isCount) {
+        fieldDeclaration = fieldDeclaration + ', ' + recordType.getScalarFields().map(getFieldName).map(attachAlias(foreignTableName, true));
+      }
     }
   });
 
