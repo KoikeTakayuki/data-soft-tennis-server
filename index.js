@@ -45,10 +45,6 @@ app.get('/competition-tag', toJsonResponse(function () {
   return service.MasterData.getCompetitionTags(connection);
 }));
 
-/* プレイヤー関連のデータ取得 */
-app.get('/player/:playerId', toJsonResponse(function (req) {
-  return service.Players.getPlayerById(connection, req.params.playerId);
-}));
 
 app.get('/player/:playerId/match', toJsonResponse(function (req) {
   return service.Players.getMatchesByPlayerId(connection, req.params.playerId);
@@ -58,8 +54,24 @@ app.get('/player/birth-year/:birthYear', toJsonResponse(function (req) {
   return service.Players.getPlayersByBirthYear(connection, req.params.birthYear);
 }));
 
-app.get('/player', toJsonResponse(function () {
-  return service.Players.getPlayers(connection);
+app.get('/player', toJsonResponse(function (req) {
+  var condition = req.query,
+      pageNumber;
+
+  if (condition.pageNumber) {
+    pageNumber = condition.pageNumber;
+    delete condition.pageNumber;
+  }
+  return service.Players.getPlayers(connection, condition, pageNumber);
+}));
+
+app.get('/player/count', toJsonResponse(function (req) {
+  return service.Players.getPlayerCount(connection, req.query);
+}));
+
+/* プレイヤー関連のデータ取得 */
+app.get('/player/:playerId', toJsonResponse(function (req) {
+  return service.Players.getPlayerById(connection, req.params.playerId);
 }));
 
 /* チーム関連のデータを取得 */

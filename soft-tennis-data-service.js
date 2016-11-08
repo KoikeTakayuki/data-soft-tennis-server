@@ -31,8 +31,15 @@ service.Players = {
   getMatchesByPlayerId: function (connection,playerId) {
     return RecordTypes.Match.all(connection, {player1_id: playerId, player2_id: playerId, player3_id: playerId, player4_id: playerId}, ['player'], [{field: 'date'}, {field:'round_id', asc: true}]);
   },
-  getPlayers: function (connection) {
-    return RecordTypes.Player.all(connection, null, ['current_team']);
+  getPlayers: function (connection, condition, pageNumber) {
+    if (!pageNumber) {
+      pageNumber = 0;
+    }
+    var offset = pageNumber * FETCH_COUNT;
+    return RecordTypes.Player.all(connection, new And(condition), ['current_team'], false, FETCH_COUNT, offset);
+  },
+  getPlayerCount: function (connection, condition) {
+    return RecordTypes.Player.count(connection, new And(condition), ['current_team']);
   }
 
 };
