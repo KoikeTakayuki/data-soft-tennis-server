@@ -117,8 +117,20 @@ app.get('/tennis-court/:tennisCourtId/competition', toJsonResponse(function (req
 }));
 
 /* 大会関連のデータを取得 */
-app.get('/competition', toJsonResponse(function () {
-  return service.Competitions.getCompetitions(connection);
+app.get('/competition', toJsonResponse(function (req) {
+  var condition = req.query,
+      pageNumber;
+
+  if (condition.pageNumber) {
+    pageNumber = condition.pageNumber;
+    delete condition.pageNumber;
+  }
+
+  return service.Competitions.getCompetitions(connection, req.query);
+}));
+
+app.get('/competition/count', toJsonResponse(function (req) {
+  return service.Competitions.getCompetitionCount(connection, req.query);
 }));
 
 app.get('/competition/:competitionId', toJsonResponse(function (req) {

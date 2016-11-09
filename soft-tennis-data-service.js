@@ -9,8 +9,15 @@ var FETCH_COUNT = 12;
 
 service.Competitions = {
 
-  getCompetitions: function (connection) {
-    return RecordTypes.Competition.all(connection, null, ['tennis_court', 'competition_type'], [{field: 'date'}]);
+  getCompetitions: function (connection, condition, pageNumber) {
+    if (!pageNumber) {
+      pageNumber = 0;
+    }
+    var offset = pageNumber * FETCH_COUNT;
+    return RecordTypes.Competition.all(connection, condition, ['tennis_court', 'competition_type'], [{field: 'date'}], FETCH_COUNT, offset);
+  },
+  getCompetitionCount: function (connection, condition) {
+    return RecordTypes.Competition.count(connection, condition, ['tennis_court', 'competition_type']);
   },
   getCompetitionById: function (connection, competitionId) {
     return RecordTypes.Competition.first(connection, {id: competitionId}, ['tennis_court', 'competition_type']);
