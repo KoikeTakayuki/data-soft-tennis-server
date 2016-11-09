@@ -5,7 +5,7 @@ var Not = require('./rql/logic/Not');
 
 var service = {};
 
-var FETCH_COUNT = 12;
+var FETCH_COUNT = 4;
 
 service.Competitions = {
 
@@ -91,8 +91,16 @@ service.Matches = {
 };
 
 service.TennisCourts = {
-  getTennisCourts: function (connection, condition) {
-    return RecordTypes.TennisCourt.all(connection, condition, ['prefecture', 'court_surface']);
+  getTennisCourts: function (connection, condition, pageNumber) {
+    if (!pageNumber) {
+      pageNumber = 0;
+    }
+    var offset = pageNumber * FETCH_COUNT;
+
+    return RecordTypes.TennisCourt.all(connection, condition, ['prefecture', 'court_surface'], false, FETCH_COUNT, offset);
+  },
+  getTennisCourtCount: function (connection, condition) {
+    return RecordTypes.TennisCourt.count(connection, condition, ['prefecture', 'court_surface']);
   },
   getTennisCourtById: function (connection, tennisCourtId) {
     return RecordTypes.TennisCourt.first(connection, {id: tennisCourtId}, ['prefecture', 'court_surface']);

@@ -108,6 +108,10 @@ app.get('/tennis-court', toJsonResponse(function () {
   return service.TennisCourts.getTennisCourts(connection);
 }));
 
+app.get('/tennis-court/count', toJsonResponse(function () {
+  return service.TennisCourts.getTennisCourtCount(connection);
+}));
+
 app.get('/tennis-court/:tennisCourtId', toJsonResponse(function (req) {
   return service.TennisCourts.getTennisCourtById(connection, req.params.tennisCourtId);
 }));
