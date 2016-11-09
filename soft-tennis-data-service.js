@@ -14,10 +14,10 @@ service.Competitions = {
       pageNumber = 0;
     }
     var offset = pageNumber * FETCH_COUNT;
-    return RecordTypes.Competition.all(connection, condition, ['tennis_court', 'competition_type'], [{field: 'date'}], FETCH_COUNT, offset);
+    return RecordTypes.Competition.all(connection, new And(condition), ['tennis_court', 'competition_type'], [{field: 'date'}], FETCH_COUNT, offset);
   },
   getCompetitionCount: function (connection, condition) {
-    return RecordTypes.Competition.count(connection, condition, ['tennis_court', 'competition_type']);
+    return RecordTypes.Competition.count(connection, new And(condition), ['tennis_court', 'competition_type']);
   },
   getCompetitionById: function (connection, competitionId) {
     return RecordTypes.Competition.first(connection, {id: competitionId}, ['tennis_court', 'competition_type']);
@@ -97,10 +97,10 @@ service.TennisCourts = {
     }
     var offset = pageNumber * FETCH_COUNT;
 
-    return RecordTypes.TennisCourt.all(connection, condition, ['prefecture', 'court_surface'], false, FETCH_COUNT, offset);
+    return RecordTypes.TennisCourt.all(connection, new And(condition), ['prefecture', 'court_surface'], false, FETCH_COUNT, offset);
   },
   getTennisCourtCount: function (connection, condition) {
-    return RecordTypes.TennisCourt.count(connection, condition, ['prefecture', 'court_surface']);
+    return RecordTypes.TennisCourt.count(connection, new And(condition), ['prefecture', 'court_surface']);
   },
   getTennisCourtById: function (connection, tennisCourtId) {
     return RecordTypes.TennisCourt.first(connection, {id: tennisCourtId}, ['prefecture', 'court_surface']);
