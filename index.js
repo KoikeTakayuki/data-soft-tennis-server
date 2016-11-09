@@ -104,12 +104,20 @@ app.get('/team/:teamId/former-player', toJsonResponse(function (req) {
 }));
 
 /* 会場関連のデータを取得 */
-app.get('/tennis-court', toJsonResponse(function () {
-  return service.TennisCourts.getTennisCourts(connection);
+app.get('/tennis-court', toJsonResponse(function (req) {
+  var condition = req.query,
+      pageNumber;
+
+  if (condition.pageNumber) {
+    pageNumber = condition.pageNumber;
+    delete condition.pageNumber;
+  }
+
+  return service.TennisCourts.getTennisCourts(connection, condition, pageNumber);
 }));
 
-app.get('/tennis-court/count', toJsonResponse(function () {
-  return service.TennisCourts.getTennisCourtCount(connection);
+app.get('/tennis-court/count', toJsonResponse(function (req) {
+  return service.TennisCourts.getTennisCourtCount(connection, req.query);
 }));
 
 app.get('/tennis-court/:tennisCourtId', toJsonResponse(function (req) {
