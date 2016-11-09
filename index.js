@@ -130,7 +130,7 @@ app.get('/competition', toJsonResponse(function (req) {
     delete condition.pageNumber;
   }
 
-  return service.Competitions.getCompetitions(connection, req.query);
+  return service.Competitions.getCompetitions(connection, req.query, pageNumber);
 }));
 
 app.get('/competition/count', toJsonResponse(function (req) {
