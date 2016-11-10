@@ -86,7 +86,7 @@ service.Matches = {
     return RecordTypes.Match.all(connection, new And(condition), ['competition'], [{field:'round_id', asc: true}, {field: 'date'}]);
   },
   getMatchById: function (connection, matchId) {
-    return RecordTypes.Match.first(connection, {id: matchId}, ['player1', 'player2', 'player3', 'player4', 'tennis_court'])
+    return RecordTypes.Match.first(connection, {id: matchId}, ['competition', 'player1', 'player2', 'player3', 'player4', 'tennis_court'])
   }
 };
 
