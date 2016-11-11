@@ -41,6 +41,7 @@ RecordTypes.Competition = new RecordType('competition', [
   new RecordField('tennis_court', RecordTypes.TennisCourt),
   new DateField('date'),
   new NumberField('duration'),
+  new NumberField('year'),
   new RecordField('competition_type', RecordTypes.CompetitionType),
   new RecordField('competition_tag', RecordTypes.CompetitionTag),
   new BooleanField('is_visible')
