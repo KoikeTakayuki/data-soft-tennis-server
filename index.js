@@ -170,6 +170,10 @@ app.get('/match', toJsonResponse(function (req) {
   return service.Matches.getMatches(connection, req.query, pageNumber);
 }));
 
+app.get('/match/count', toJsonResponse(function (req) {
+  return service.Matches.getMatchCount(connection, req.query);
+}));
+
 app.get('/match/:matchId', toJsonResponse(function (req) {
   return service.Matches.getMatchById(connection, req.params.matchId);
 }));

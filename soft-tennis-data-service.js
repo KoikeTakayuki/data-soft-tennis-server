@@ -91,6 +91,9 @@ service.Matches = {
 
     return RecordTypes.Match.all(connection, new And(condition), ['competition'], [{field:'round_id', asc: true}, {field: 'date'}], FETCH_COUNT, offset);
   },
+  getMatchCount: function (connection, condition) {
+    return RecordTypes.Match.count(connection, new And(condition), ['competition']);
+  },
   getMatchById: function (connection, matchId) {
     return RecordTypes.Match.first(connection, {id: matchId}, ['competition', 'round', 'player1', 'player2', 'player3', 'player4', 'tennis_court'])
   }
