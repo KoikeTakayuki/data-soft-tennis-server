@@ -89,7 +89,7 @@ service.Matches = {
     }
     var offset = pageNumber * FETCH_COUNT;
 
-    return RecordTypes.Match.all(connection, new And(condition), ['competition'], [{field:'round_id', asc: true}, {field: 'date'}], FETCH_COUNT, offset););
+    return RecordTypes.Match.all(connection, new And(condition), ['competition'], [{field:'round_id', asc: true}, {field: 'date'}], FETCH_COUNT, offset);
   },
   getMatchById: function (connection, matchId) {
     return RecordTypes.Match.first(connection, {id: matchId}, ['competition', 'round', 'player1', 'player2', 'player3', 'player4', 'tennis_court'])
