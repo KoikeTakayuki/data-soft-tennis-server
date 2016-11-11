@@ -160,7 +160,14 @@ app.get('/team-match', toJsonResponse(function () {
 
 /* 試合関連のデータを取得 */
 app.get('/match', toJsonResponse(function (req) {
-  return service.Matches.getMatches(connection, req.query);
+  var condition = req.query,
+      pageNumber;
+
+  if (condition.pageNumber) {
+    pageNumber = condition.pageNumber;
+    delete condition.pageNumber;
+  }
+  return service.Matches.getMatches(connection, req.query, pageNumber);
 }));
 
 app.get('/match/:matchId', toJsonResponse(function (req) {
